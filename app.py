@@ -108,16 +108,8 @@ if st.session_state.scripts:
                             frame=render_frame(title,edited,i,len(st.session_state.scripts),bgpath)
                             frame_path=os.path.join(td,"frame.jpg"); frame.save(frame_path,quality=92)
                             clip=ImageClip(frame_path).with_duration(audio.duration).with_audio(audio)
-                            out=f"football_video_{i}.mp4"
-                            clip.write_videofile(
-    out,
-    fps=15,
-    codec="libx264",
-    audio_codec="aac",
-    preset="ultrafast",
-    threads=1,
-    logger=None
-(out,fps=24,codec="libx264",audio_codec="aac",logger=None)
+                            out=f"football_video_{i}.
+                            clip.write_videofile(out, fps=15, codec="libx264", audio_codec="aac", preset="ultrafast", threads=1, logger=None)
                             clip.close(); audio.close()
                             data=Path(out).read_bytes()
                         st.success("Video creato. Controllalo prima di pubblicarlo.")
