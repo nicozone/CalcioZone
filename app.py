@@ -49,7 +49,7 @@ def get_font(size):
     return ImageFont.load_default()
 
 def render_frame(title, text, idx, total, bg=None):
-    W,H=1080,1920
+    W,H=720,1280
     if bg:
         im=Image.open(bg).convert("RGB").resize((W,H))
         overlay=Image.new("RGBA",(W,H),(0,0,0,145)); im=Image.alpha_composite(im.convert("RGBA"),overlay)
@@ -109,7 +109,15 @@ if st.session_state.scripts:
                             frame_path=os.path.join(td,"frame.jpg"); frame.save(frame_path,quality=92)
                             clip=ImageClip(frame_path).with_duration(audio.duration).with_audio(audio)
                             out=f"football_video_{i}.mp4"
-                            clip.write_videofile(out,fps=24,codec="libx264",audio_codec="aac",logger=None)
+                            clip.write_videofile(
+    out,
+    fps=15,
+    codec="libx264",
+    audio_codec="aac",
+    preset="ultrafast",
+    threads=1,
+    logger=None
+(out,fps=24,codec="libx264",audio_codec="aac",logger=None)
                             clip.close(); audio.close()
                             data=Path(out).read_bytes()
                         st.success("Video creato. Controllalo prima di pubblicarlo.")
