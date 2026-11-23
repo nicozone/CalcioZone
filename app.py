@@ -8,7 +8,8 @@ from io import BytesIO
 
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
-from gtts import gTTS
+import asyncio
+import edge_tts
 from moviepy import AudioFileClip, ImageSequenceClip
 
 st.set_page_config(page_title="CalcioZone Studio", page_icon="⚽", layout="wide")
@@ -178,7 +179,14 @@ def render_video(title, hook, script, images, duration_limit):
         td = Path(td)
         audio_path = td / "voice.mp3"
         # gTTS is the basic Italian voice in this starter build.
-        gTTS(text=script, lang="it", slow=False).save(str(audio_path))
+        asyncio.run(
+    edge_tts.Communicate(
+        text=edited,
+        voice="it-IT-DiegoNeural",
+        rate="+8%",
+        pitch="+2Hz"
+    ).save(audio_path)
+)
         audio = AudioFileClip(str(audio_path))
         duration = audio.duration
         words = word_timings(script, duration)
